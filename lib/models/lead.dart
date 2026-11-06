@@ -13,6 +13,8 @@ class Lead {
   String? location;
   String? enquiry;
   String? notes;
+  String? siteStatus;
+  String? source;
 
   Lead({
     this.id,
@@ -27,6 +29,8 @@ class Lead {
     this.location,
     this.enquiry,
     this.notes,
+    this.siteStatus, // NEW
+    this.source,
   });
 
   Map<String, Object?> toMap() => {
@@ -42,6 +46,8 @@ class Lead {
     'location': location,
     'enquiry': enquiry,
     'notes': notes,
+    'site_status': siteStatus,
+    'source': source,
   };
 
   factory Lead.fromMap(Map<String, Object?> m) => Lead(
@@ -62,6 +68,8 @@ class Lead {
     location: m['location'] as String?,
     enquiry: m['enquiry'] as String?,
     notes: m['notes'] as String?,
+    siteStatus: m['site_status'] as String?,
+    source: m['source'] as String?,
   );
 }
 

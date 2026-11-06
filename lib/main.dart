@@ -23,12 +23,18 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => ThemeProvider()..load()),
         ChangeNotifierProvider(create: (_) => SettingsProvider()..load()),
         ChangeNotifierProvider(create: (_) => TemplateProvider()..load()),
-        ChangeNotifierProvider(create: (_) => DropdownProvider()..loadOptions()), // ← NEW
-        ChangeNotifierProvider(create: (_) => LeadProvider()..loadHistory()),
+        ChangeNotifierProvider(create: (_) => DropdownProvider()),
+        ChangeNotifierProvider(create: (_) => LeadProvider()),
       ],
       child: const LeadSenderApp(),
     ),
   );
+
+  // Defer network calls until after the first frame
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    // These will be loaded lazily by the screens, or you can trigger here
+    // if you have a reference to the providers.
+  });
 }
 // import 'package:flutter/material.dart';
 // import 'package:leadsender/providers/template_provider.dart';

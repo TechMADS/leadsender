@@ -10,6 +10,8 @@ class ExtractedNumber {
   final String? name;
   final String? location;
   final String? enquiry;
+  final String? siteStatus;
+  final String? source;
 
   ExtractedNumber(
       this.normalized,
@@ -17,6 +19,8 @@ class ExtractedNumber {
         this.name,
         this.location,
         this.enquiry,
+        this.siteStatus, // ADD THIS
+        this.source,
       });
 }
 

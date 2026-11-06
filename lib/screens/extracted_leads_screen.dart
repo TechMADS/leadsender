@@ -50,11 +50,11 @@ class _ExtractedLeadsScreenState extends State<ExtractedLeadsScreen> {
                       List.generate(batch.length, (i) => i),
                     ),
                   ),
-                  child: const Text('Select All'),
+                  child: const Text('Select All', style: TextStyle(color: Colors.green),),
                 ),
                 TextButton(
                   onPressed: () => setState(() => _selected.clear()),
-                  child: const Text('Deselect All'),
+                  child: const Text('Deselect All', style: TextStyle(color: Colors.orange)),
                 ),
                 const Spacer(),
                 TextButton(
@@ -64,7 +64,7 @@ class _ExtractedLeadsScreenState extends State<ExtractedLeadsScreen> {
                     provider.removeIndices(_selected);
                     _selected.clear();
                   },
-                  child: const Text('Remove'),
+                  child: const Text('Remove', style: TextStyle(color: Colors.red)),
                 ),
               ],
             ),
@@ -116,8 +116,8 @@ class _ExtractedLeadsScreenState extends State<ExtractedLeadsScreen> {
                           builder: (_) => const MessagePreviewScreen(),
                         ),
                       ),
-                      icon: const Icon(Icons.preview),
-                      label: const Text('Preview'),
+                      icon: const Icon(Icons.preview, color: Colors.blue,),
+                      label: const Text('Preview', style: TextStyle(color: Colors.blue),),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -142,6 +142,7 @@ class _ExtractedLeadsScreenState extends State<ExtractedLeadsScreen> {
                       },
                       icon: const Icon(Icons.send),
                       label: const Text('Continue'),
+                      style: FilledButton.styleFrom(backgroundColor: primaryColor),
                     ),
                   ),
                 ],

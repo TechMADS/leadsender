@@ -95,7 +95,7 @@ class _TemplatePreviewCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(
-          color: isSelected ? scheme.primary : scheme.outlineVariant,
+          color: isSelected ? primaryColor : Colors.black,
           width: isSelected ? 2 : 1,
         ),
       ),
@@ -118,24 +118,20 @@ class _TemplatePreviewCard extends StatelessWidget {
                 if (template.isDefault)
                   _Badge(
                     label: 'Default',
-                    color: scheme.primaryContainer,
-                    textColor: scheme.onPrimaryContainer,
+                    color: primaryColor,
+                    textColor: Colors.white,
                   ),
                 if (isSelected) ...[
                   const SizedBox(width: 6),
                   _Badge(
                     label: 'Selected',
-                    color: scheme.secondaryContainer,
-                    textColor: scheme.onSecondaryContainer,
+                    color: primaryColor,
+                    textColor: Colors.white,
                   ),
                 ],
               ],
             ),
-            const SizedBox(height: 4),
-            Text(
-              'Preview with sample recipient: Raj, +91 98765 43210',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+
             const Divider(height: 20),
 
             // ---- Message body preview ----
@@ -143,7 +139,7 @@ class _TemplatePreviewCard extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: scheme.surfaceContainerHighest.withOpacity(0.4),
+                color: Colors.grey.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: SelectableText(
@@ -166,8 +162,8 @@ class _TemplatePreviewCard extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.copy, size: 18),
-                  label: const Text('Copy'),
+                  icon: const Icon(Icons.copy, size: 18, color: Colors.green,),
+                  label: const Text('Copy', style: TextStyle(color: Colors.black),),
                 ),
                 const Spacer(),
                 if (!isSelected)
@@ -181,7 +177,8 @@ class _TemplatePreviewCard extends StatelessWidget {
                         ),
                       );
                     },
-                    child: const Text('Use This'),
+                    style: FilledButton.styleFrom(backgroundColor: primaryColor),
+                    child: const Text('Use This', style: TextStyle(color: Colors.white),),
                   )
                 else
                   FilledButton.tonal(

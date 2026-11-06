@@ -9,9 +9,9 @@
         </intent>
     </queries>
     <application
-        android:label="LeadSender"
+        android:label="VD_Leads"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -40,7 +40,7 @@
 <!--    <application-->
 <!--        android:label="leadsender"-->
 <!--        android:name="${applicationName}"-->
-<!--        android:icon="@mipmap/ic_launcher">-->
+<!--        android:icon="@mipmap/launcher_icon">-->
 <!--        <activity-->
 <!--            android:name=".MainActivity"-->
 <!--            android:exported="true"-->

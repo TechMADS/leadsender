@@ -62,6 +62,43 @@ class LeadProvider extends ChangeNotifier {
     }
   }
 
+  // Future<void> applyExtraction(ExtractionResult result) async {
+  //   _currentBatch.clear();
+  //   _rejected.clear();
+  //   _ambiguous.clear();
+  //   _duplicatesRemoved = result.duplicatesRemoved;
+  //   _alreadyProcessed = 0;
+  //   _rejected.addAll(result.rejected.map((r) => RejectedRow(r.raw, r.reason)));
+  //   _ambiguous.addAll(result.ambiguous);
+  //
+  //   for (final n in result.valid) {
+  //     Lead? existing;
+  //     for (final h in _history) {
+  //       if (h.normalizedNumber == n.normalized) {
+  //         existing = h;
+  //         break;
+  //       }
+  //     }
+  //     final lead = Lead(
+  //       sheetId: existing?.sheetId,
+  //       normalizedNumber: n.normalized,
+  //       originalNumber: n.original,
+  //       name: n.name ?? existing?.name,
+  //       location: n.location ?? existing?.location,
+  //       enquiry: n.enquiry ?? existing?.enquiry,
+  //       importedAt: existing?.importedAt ?? DateTime.now(),
+  //       lastProcessedAt: existing?.lastProcessedAt,
+  //       status: existing?.status ?? LeadStatus.pending,
+  //       conversionStatus: existing?.conversionStatus ?? 'newLead', // ← Updated to String
+  //     );
+  //     if (existing != null && existing.status == LeadStatus.sent) {
+  //       _alreadyProcessed++;
+  //     }
+  //     _currentBatch.add(lead);
+  //   }
+  //   notifyListeners();
+  // }
+
   Future<void> applyExtraction(ExtractionResult result) async {
     _currentBatch.clear();
     _rejected.clear();
@@ -79,6 +116,7 @@ class LeadProvider extends ChangeNotifier {
           break;
         }
       }
+
       final lead = Lead(
         sheetId: existing?.sheetId,
         normalizedNumber: n.normalized,
@@ -86,10 +124,14 @@ class LeadProvider extends ChangeNotifier {
         name: n.name ?? existing?.name,
         location: n.location ?? existing?.location,
         enquiry: n.enquiry ?? existing?.enquiry,
+        // --- ADDED MISSING FIELDS HERE ---
+        siteStatus: n.siteStatus ?? existing?.siteStatus,
+        source: n.source ?? existing?.source,
+        // ---------------------------------
         importedAt: existing?.importedAt ?? DateTime.now(),
         lastProcessedAt: existing?.lastProcessedAt,
         status: existing?.status ?? LeadStatus.pending,
-        conversionStatus: existing?.conversionStatus ?? 'newLead', // ← Updated to String
+        conversionStatus: existing?.conversionStatus ?? 'newLead',
       );
       if (existing != null && existing.status == LeadStatus.sent) {
         _alreadyProcessed++;
@@ -146,12 +188,17 @@ class LeadProvider extends ChangeNotifier {
         String? location,
         String? enquiry,
         String? name,
+        String? siteStatus,
+        String? source,
+        LeadStatus? status,
       }) async {
     if (conversionStatus != null) lead.conversionStatus = conversionStatus;
     if (location != null) lead.location = location;
     if (enquiry != null) lead.enquiry = enquiry;
-    if (name != null) lead.name = name; // Wait, name is final in Lead!
-    // Actually, let's fix Lead model to make 'name' mutable like location/enquiry.
+    if (name != null) lead.name = name;
+    if (siteStatus != null) lead.siteStatus = siteStatus;
+    if (source != null) lead.source = source;
+    if (status != null) lead.status = status;
 
     try {
       if (lead.sheetId != null) {
@@ -161,6 +208,9 @@ class LeadProvider extends ChangeNotifier {
           location: lead.location ?? '',
           enquiry: lead.enquiry ?? '',
           name: lead.name ?? '',
+          siteStatus: lead.siteStatus ?? '',
+          source: lead.source ?? '',
+          status: lead.status.name, // Convert enum to string
         );
       } else {
         final id = await _sheet.addLead(lead);
@@ -173,6 +223,40 @@ class LeadProvider extends ChangeNotifier {
 
     await loadHistory();
   }
+
+  // Future<void> updateConversion(
+  //     Lead lead, {
+  //       String? conversionStatus,
+  //       String? location,
+  //       String? enquiry,
+  //       String? name,
+  //     }) async {
+  //   if (conversionStatus != null) lead.conversionStatus = conversionStatus;
+  //   if (location != null) lead.location = location;
+  //   if (enquiry != null) lead.enquiry = enquiry;
+  //   if (name != null) lead.name = name; // Wait, name is final in Lead!
+  //   // Actually, let's fix Lead model to make 'name' mutable like location/enquiry.
+  //
+  //   try {
+  //     if (lead.sheetId != null) {
+  //       await _sheet.updateConversion(
+  //         lead.sheetId!,
+  //         conversionStatus: lead.conversionStatus,
+  //         location: lead.location ?? '',
+  //         enquiry: lead.enquiry ?? '',
+  //         name: lead.name ?? '',
+  //       );
+  //     } else {
+  //       final id = await _sheet.addLead(lead);
+  //       lead.sheetId = id;
+  //     }
+  //   } catch (e) {
+  //     debugPrint('updateConversion failed: $e');
+  //     _lastError = e.toString();
+  //   }
+  //
+  //   await loadHistory();
+  // }
 
   Future<void> updateLeadStatus(Lead lead, LeadStatus status) async {
     lead.status = status;

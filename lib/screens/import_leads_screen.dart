@@ -101,9 +101,19 @@ Contact Raj: (0413) 2234567
                 maxLines: null,
                 expands: true,
                 textAlignVertical: TextAlignVertical.top,
+                cursorColor: Colors.black,
                 decoration: const InputDecoration(
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF439F3C), width: 2.0),
+                  ),
+
+                  // 2. Border configuration when the field is NOT selected (Optional)
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                  ),
                   fillColor: Colors.white,
                   labelText: 'Paste WhatsApp messages or phone numbers here',
+                  labelStyle: TextStyle(color: Colors.black),
                   alignLabelWithHint: true,
                 ),
               ),
@@ -115,19 +125,19 @@ Contact Raj: (0413) 2234567
               children: [
                 OutlinedButton.icon(
                   onPressed: _paste,
-                  icon: const Icon(Icons.content_paste),
-                  label: const Text('Paste'),
+                  icon: const Icon(Icons.content_paste, color: Colors.green,),
+                  label: const Text('Paste',style: TextStyle(color: Colors.green),),
                 ),
                 OutlinedButton.icon(
                   onPressed: () => setState(() => _controller.clear()),
-                  icon: const Icon(Icons.clear),
-                  label: const Text('Clear'),
+                  icon: const Icon(Icons.clear, color: Colors.red,),
+                  label: const Text('Clear', style: TextStyle(color: Colors.red),),
                 ),
-                OutlinedButton.icon(
-                  onPressed: () => setState(() => _controller.text = _sample),
-                  icon: const Icon(Icons.auto_awesome),
-                  label: const Text('Sample'),
-                ),
+                // OutlinedButton.icon(
+                //   onPressed: () => setState(() => _controller.text = _sample),
+                //   icon: const Icon(Icons.auto_awesome),
+                //   label: const Text('Sample'),
+                // ),
               ],
             ),
             const SizedBox(height: 12),
@@ -141,6 +151,7 @@ Contact Raj: (0413) 2234567
                     )
                   : const Icon(Icons.search),
               label: const Text('Extract Numbers'),
+              style: FilledButton.styleFrom(backgroundColor: primaryColor),
             ),
           ],
         ),

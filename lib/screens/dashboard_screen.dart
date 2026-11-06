@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:leadsender/screens/add_lead_screen.dart';
 import 'package:provider/provider.dart';
 import '../providers/lead_provider.dart';
 import '../providers/settings_provider.dart';
@@ -30,7 +31,7 @@ class DashboardScreen extends StatelessWidget {
         backgroundColor: primaryColor,
         title: Text(
           settings.profile.shopName.isEmpty
-              ? 'Welcome 👋'
+              ? 'VD_Leads📈'
               : settings.profile.shopName,
           style: const TextStyle(
               fontWeight: FontWeight.bold, color: Colors.white),
@@ -81,7 +82,7 @@ class DashboardScreen extends StatelessWidget {
                   ],
                 ),
               ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 2),
             GridView.count(
               crossAxisCount: 2,
               shrinkWrap: true,
@@ -116,18 +117,33 @@ class DashboardScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (_) => const LeadHistoryScreen()),
               ),
-              icon: const Icon(Icons.history),
-              label: const Text('Lead History'),
+              icon: const Icon(Icons.history, color: Colors.green,),
+              label: const Text('Lead History', style: TextStyle(color: Colors.black),),
+              style: OutlinedButton.styleFrom(
+                side:  BorderSide(color: primaryColor, width: 1.0), // Customize color and width here
+              ),
             ),
             const SizedBox(height: 12),
             OutlinedButton.icon(
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (_) => const MessagePreviewScreen()),
+                MaterialPageRoute(builder: (_) => const TemplatesScreen()),
               ),
-              icon: const Icon(Icons.message),
-              label: const Text('Message Template'),
+              icon: const Icon(Icons.article, color: Colors.green),
+              label: const Text('Message Templates', style: TextStyle(color: Colors.black)),
+              style: OutlinedButton.styleFrom(
+                side:  BorderSide(color: primaryColor, width: 1.0), // Customize color and width here
+              ),
+            ),
+            const SizedBox(height: 12),
+            FilledButton.icon(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const AddLeadScreen()),
+              ),
+              icon: const Icon(Icons.upload_file),
+              label: const Text('Create New Leads'),
+              style: FilledButton.styleFrom(backgroundColor: primaryColor),
             ),
             const SizedBox(height: 12),
             OutlinedButton.icon(
@@ -136,17 +152,25 @@ class DashboardScreen extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (_) => const BusinessSettingsScreen()),
               ),
-              icon: const Icon(Icons.settings),
-              label: const Text('Business Settings'),
+              icon: const Icon(Icons.settings, color: Colors.green),
+              label: const Text('Business Settings', style: TextStyle(color: Colors.black)),
+              style: OutlinedButton.styleFrom(
+                side:  BorderSide(color: primaryColor, width: 1.0), // Customize color and width here
+              ),
             ),
+
             const SizedBox(height: 12),
             OutlinedButton.icon(
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const TemplatesScreen()),
+                MaterialPageRoute(
+                    builder: (_) => const MessagePreviewScreen()),
               ),
-              icon: const Icon(Icons.article),
-              label: const Text('Message Templates'),
+              icon: const Icon(Icons.message, color: Colors.green),
+              label: const Text('Message Preview', style: TextStyle(color: Colors.black)),
+              style: OutlinedButton.styleFrom(
+                side:  BorderSide(color: primaryColor, width: 1.0), // Customize color and width here
+              ),
             ),
           ],
         ),

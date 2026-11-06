@@ -13,6 +13,7 @@ class DropdownProvider extends ChangeNotifier {
     _loading = true;
     notifyListeners();
     try {
+      // Fetch the main conversion options
       _options = await _service.fetchDropdownOptions();
     } catch (e) {
       debugPrint('Failed to load options: $e');
@@ -25,7 +26,7 @@ class DropdownProvider extends ChangeNotifier {
   Future<void> addOption(String option) async {
     if (option.trim().isEmpty) return;
     try {
-      await _service.addDropdownOption(option.trim());
+      await _service.addDropdownOption('Conversion', option.trim());
       await loadOptions();
     } catch (e) {
       debugPrint('Failed to add option: $e');

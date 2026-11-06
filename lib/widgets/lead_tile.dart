@@ -22,8 +22,8 @@ class LeadTile extends StatelessWidget {
     final trailing = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _conversionBadge(lead.conversionStatus),
-        const SizedBox(width: 6),
+        // _conversionBadge(lead.conversionStatus),
+        // const SizedBox(width: 6),
         Icon(
           _statusIcon(lead.status),
           color: _statusColor(lead.status),
@@ -49,15 +49,13 @@ class LeadTile extends StatelessWidget {
     );
 
     if (showCheckbox) {
-      return GestureDetector(
-        onTap: onTap,
-        child: CheckboxListTile(
-          value: selected,
-          onChanged: onChanged,
-          title: title,
-          subtitle: subtitle,
-          secondary: trailing,
-        ),
+      return CheckboxListTile(
+        value: selected,
+        onChanged: onChanged,
+        title: title,
+        subtitle: subtitle,
+        secondary: trailing,
+        activeColor: Colors.green,
       );
     }
 

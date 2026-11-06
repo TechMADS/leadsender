@@ -91,16 +91,16 @@ class _MessagingQueueScreenState extends State<MessagingQueueScreen> {
         backgroundColor: primaryColor,
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: Icon(_paused ? Icons.play_arrow : Icons.pause, color: Colors.white,),
-            onPressed: () => setState(() => _paused = !_paused),
-            tooltip: _paused ? 'Resume' : 'Pause',
-          ),
-          IconButton(
-            icon: const Icon(Icons.close, color: Colors.white,),
-            onPressed: () => Navigator.pop(context),
-            tooltip: 'Stop Queue',
-          ),
+          // IconButton(
+          //   icon: Icon(_paused ? Icons.play_arrow : Icons.pause, color: Colors.white,),
+          //   onPressed: () => setState(() => _paused = !_paused),
+          //   tooltip: _paused ? 'Resume' : 'Pause',
+          // ),
+          // IconButton(
+          //   icon: const Icon(Icons.close, color: Colors.white,),
+          //   onPressed: () => Navigator.pop(context),
+          //   tooltip: 'Stop Queue',
+          // ),
         ],
       ),
       body: Padding(
@@ -151,24 +151,25 @@ class _MessagingQueueScreenState extends State<MessagingQueueScreen> {
               onPressed: _paused ? null : _open,
               icon: const Icon(Icons.open_in_new),
               label: const Text('Open WhatsApp with Message'),
+              style: FilledButton.styleFrom(backgroundColor: primaryColor),
             ),
             const SizedBox(height: 12),
             OutlinedButton.icon(
               onPressed: _paused ? null : () => _setStatus(LeadStatus.sent),
-              icon: const Icon(Icons.check),
-              label: const Text('Mark as Sent'),
+              icon: const Icon(Icons.check, color: Colors.green),
+              label: const Text('Mark as Sent', style: TextStyle(color: Colors.black),),
             ),
             const SizedBox(height: 12),
             OutlinedButton.icon(
               onPressed: _paused ? null : () => _setStatus(LeadStatus.skipped),
-              icon: const Icon(Icons.skip_next),
-              label: const Text('Skip Lead'),
+              icon: const Icon(Icons.skip_next, color: Colors.green),
+              label: const Text('Skip Lead', style: TextStyle(color: Colors.black)),
             ),
             const SizedBox(height: 12),
             OutlinedButton.icon(
               onPressed: _paused ? null : () => _setStatus(LeadStatus.failed),
-              icon: const Icon(Icons.error_outline),
-              label: const Text('Mark as Failed'),
+              icon: const Icon(Icons.error_outline, color: Colors.green,),
+              label: const Text('Mark as Failed', style: TextStyle(color: Colors.black)),
             ),
             const Spacer(),
             Row(
@@ -176,13 +177,15 @@ class _MessagingQueueScreenState extends State<MessagingQueueScreen> {
                 Expanded(
                   child: OutlinedButton(
                     onPressed: _hasPrev ? _prev : null,
-                    child: const Text('Previous'),
+                    style: OutlinedButton.styleFrom(backgroundColor: Colors.blue),
+                    child: const Text('Previous', style: TextStyle(color: Colors.white)),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: FilledButton(
                     onPressed: _hasNext ? _next : null,
+                    style: FilledButton.styleFrom(backgroundColor: primaryColor),
                     child: const Text('Next Lead'),
                   ),
                 ),
@@ -197,6 +200,7 @@ class _MessagingQueueScreenState extends State<MessagingQueueScreen> {
   void _showTemplatePicker() {
     final tp = context.read<TemplateProvider>();
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       context: context,
       showDragHandle: true,
       builder: (_) => SafeArea(
@@ -225,6 +229,7 @@ class _MessagingQueueScreenState extends State<MessagingQueueScreen> {
                         tp.select(t);
                         Navigator.pop(context);
                       },
+                      activeColor: Colors.green,
                     ),
                   const Divider(),
                   ListTile(

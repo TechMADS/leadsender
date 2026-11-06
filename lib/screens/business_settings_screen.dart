@@ -98,21 +98,21 @@ class _BusinessSettingsScreenState extends State<BusinessSettingsScreen> {
             ),
             _field(
               _website,
-              'Website URL (optional)',
+              'Website URL',
               keyboard: TextInputType.url,
               validator: (v) =>
               v == null || v.trim().isEmpty ? null : _urlValidator(v),
             ),
-            _field(_hours, 'Business Hours (optional)'),
+            // _field(_hours, 'Business Hours (optional)'),
             const SizedBox(height: 8),
-            DropdownButtonFormField<String>(
-              value: _cc,
-              decoration: const InputDecoration(labelText: 'Default Country Code'),
-              items: const [
-                DropdownMenuItem(value: '+91', child: Text('India (+91)')),
-              ],
-              onChanged: (v) => setState(() => _cc = v ?? '+91'),
-            ),
+            // DropdownButtonFormField<String>(
+            //   value: _cc,
+            //   decoration: const InputDecoration(labelText: 'Default Country Code'),
+            //   items: const [
+            //     DropdownMenuItem(value: '+91', child: Text('India (+91)')),
+            //   ],
+            //   onChanged: (v) => setState(() => _cc = v ?? '+91'),
+            // ),
             const SizedBox(height: 16),
             _field(_template, 'Message Template', maxLines: 12),
             const SizedBox(height: 8),
@@ -127,6 +127,7 @@ class _BusinessSettingsScreenState extends State<BusinessSettingsScreen> {
               onPressed: _save,
               icon: const Icon(Icons.save),
               label: const Text('Save'),
+              style: FilledButton.styleFrom(backgroundColor: primaryColor),
             ),
           ],
         ),
@@ -148,11 +149,25 @@ class _BusinessSettingsScreenState extends State<BusinessSettingsScreen> {
         controller: c,
         maxLines: maxLines,
         keyboardType: keyboard,
+        cursorColor: Colors.black,
         validator: validator ??
             (required
                 ? (v) => (v == null || v.trim().isEmpty) ? 'Required' : null
                 : null),
-        decoration: InputDecoration(labelText: label, fillColor: Colors.white),
+        decoration: InputDecoration(labelText: label, fillColor: Colors.white,
+          filled: true,
+
+          labelStyle: TextStyle(color: Colors.black),
+
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Color(0xFF439F3C), width: 2.0),
+          ),
+
+          // 2. Border configuration when the field is NOT selected (Optional)
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey, width: 1.0),
+          )
+          ,),
       ),
     );
   }
